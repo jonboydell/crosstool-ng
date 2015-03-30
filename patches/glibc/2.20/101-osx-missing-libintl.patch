@@ -1,0 +1,22 @@
+diff --git a/sunrpc/Makefile b/sunrpc/Makefile
+index a2722af..ed119d6 100644
+--- a/sunrpc/Makefile
++++ b/sunrpc/Makefile
+@@ -164,7 +164,7 @@ $(cross-rpcgen-objs): $(objpfx)cross-%.o: %.c $(before-compile)
+ 		$(OUTPUT_OPTION) $(native-compile-mkdep-flags) -c
+ 
+ $(objpfx)cross-rpcgen: $(cross-rpcgen-objs)
+-	$(BUILD_CC) $^ $(BUILD_LDFLAGS) -o $@
++	$(BUILD_CC) $^ $(BUILD_LDFLAGS) -L/usr/local/lib -lintl -o $@
+ 
+ # This makes sure -DNOT_IN_libc is passed for all these modules.
+ cpp-srcs-left := $(rpcgen-objs:.o=.c)
+@@ -180,7 +180,7 @@ rpcgen-cmd = CPP='$(CC) -E -x c-header' $(built-program-file) -Y ../scripts
+ # Install the rpc data base file.
+ $(inst_sysconfdir)/rpc: etc.rpc $(+force)
+ 	$(do-install)
+-
++
+ # Generate the rpcsvc headers with rpcgen.
+ # We use a stamp file to avoid unnessary recompilation each time rpcgen is
+ # relinked.
